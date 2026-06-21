@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  labels:
+    app: auth-service
+spec:
+  replicas: {{ .Values.services.auth.replicas }}
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      serviceAccountName: agriconnect-services
+      containers:
+        - name: auth-service
+          image: {{ .Values.services.auth.image }}:{{ .Values.services.auth.tag }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3001
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: agriconnect-config
+          env:
+            - name: PORT
+              value: "3001"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3001
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3001
+
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+      terminationGracePeriodSeconds: 30

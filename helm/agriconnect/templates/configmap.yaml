@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agriconnect-config
+  namespace: {{ .Values.global.namespace }}
+data:
+  NODE_ENV: "production"
+  AWS_REGION: {{ .Values.global.region | quote }}
+  DB_SECRET_NAME: {{ .Values.global.dbSecretName | quote }}
+  EVENTS_TOPIC_ARN: {{ .Values.global.eventsTopicArn | quote }}
+  NOTIFICATIONS_QUEUE_URL: {{ .Values.global.notificationsQueueUrl | quote }}

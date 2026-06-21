@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-service
+  labels:
+    app: media-service
+spec:
+  replicas: {{ .Values.services.media.replicas }}
+  selector:
+    matchLabels:
+      app: media-service
+  template:
+    metadata:
+      labels:
+        app: media-service
+    spec:
+      serviceAccountName: agriconnect-services
+      containers:
+        - name: media-service
+          image: {{ .Values.services.media.image }}:{{ .Values.services.media.tag }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3004
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: agriconnect-config
+          env:
+            - name: PORT
+              value: "3004"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3004
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3004
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+      terminationGracePeriodSeconds: 30

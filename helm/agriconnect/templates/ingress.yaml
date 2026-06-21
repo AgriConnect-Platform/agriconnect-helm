@@ -1,0 +1,55 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: agriconnect-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/subnets: {{ .Values.ingress.subnets }}
+    alb.ingress.kubernetes.io/healthcheck-path: /healthz
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "30"
+    alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: "3"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /api/auth
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: {{ .Values.services.auth.port }}
+          - path: /api/marketplace
+            pathType: Prefix
+            backend:
+              service:
+                name: marketplace-service
+                port:
+                  number: {{ .Values.services.marketplace.port }}
+          - path: /api/orders
+            pathType: Prefix
+            backend:
+              service:
+                name: order-service
+                port:
+                  number: {{ .Values.services.order.port }}
+          - path: /api/media
+            pathType: Prefix
+            backend:
+              service:
+                name: media-service
+                port:
+                  number: {{ .Values.services.media.port }}
+          - path: /api/notifications
+            pathType: Prefix
+            backend:
+              service:
+                name: notification-service
+                port:
+                  number: {{ .Values.services.notification.port }}
+{{- end }}

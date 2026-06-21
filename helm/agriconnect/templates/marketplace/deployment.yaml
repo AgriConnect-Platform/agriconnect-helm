@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: marketplace-service
+  labels:
+    app: marketplace-service
+spec:
+  replicas: {{ .Values.services.marketplace.replicas }}
+  selector:
+    matchLabels:
+      app: marketplace-service
+  template:
+    metadata:
+      labels:
+        app: marketplace-service
+    spec:
+      serviceAccountName: agriconnect-services
+      containers:
+        - name: marketplace-service
+          image: {{ .Values.services.marketplace.image }}:{{ .Values.services.marketplace.tag }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3002
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: agriconnect-config
+          env:
+            - name: PORT
+              value: "3002"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3002
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3002
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+      terminationGracePeriodSeconds: 30

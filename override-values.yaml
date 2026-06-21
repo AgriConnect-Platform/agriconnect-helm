@@ -1,0 +1,5 @@
+global:
+  irsaRoleArn: "arn:aws:iam::978594443309:role/agriconnect-dev-eks-services-role"
+
+ingress:
+  subnets: "subnet-0adec054ab1a92871,subnet-0f13700b8a6a3c7ab"
