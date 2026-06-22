@@ -1,41 +1,41 @@
-global:
+﻿global:
   namespace: production
   region: ap-south-1
   dbSecretName: "agriconnect/dev/database"
-  eventsTopicArn: "arn:aws:sns:ap-south-1:978594443309:AgriConnect-Events"
-  notificationsQueueUrl: "https://sqs.ap-south-1.amazonaws.com/978594443309/AgriConnect-Notifications-Queue"
+  eventsTopicArn: "arn:aws:sns:ap-south-1:893431614084:AgriConnect-Events"
+  notificationsQueueUrl: "https://sqs.ap-south-1.amazonaws.com/893431614084/AgriConnect-Notifications-Queue"
   # Set by bootstrap script from terraform output
-  irsaRoleArn: "arn:aws:iam::978594443309:role/agriconnect-dev-eks-services-role"
-  ecrRegistry: "978594443309.dkr.ecr.ap-south-1.amazonaws.com"
+  irsaRoleArn: "arn:aws:iam::893431614084:role/agriconnect-dev-eks-services-role"
+  ecrRegistry: "893431614084.dkr.ecr.ap-south-1.amazonaws.com"
 
 services:
   auth:
-    image: "978594443309.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-auth"
-    tag: 43de8ce
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-auth"
+    tag: 5bb4818
     port: 3001
     replicas: 2
 
   marketplace:
-    image: "978594443309.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-marketplace"
-    tag: 43de8ce
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-marketplace"
+    tag: 5bb4818
     port: 3002
     replicas: 2
 
   order:
-    image: "978594443309.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-order"
-    tag: 43de8ce
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-order"
+    tag: 5bb4818
     port: 3003
     replicas: 2
 
   media:
-    image: "978594443309.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-media"
-    tag: 43de8ce
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-media"
+    tag: 5bb4818
     port: 3004
     replicas: 2
 
   notification:
-    image: "978594443309.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-notification"
-    tag: 43de8ce
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-notification"
+    tag: 5bb4818
     port: 3005
     replicas: 2
 
@@ -52,3 +52,6 @@ ingress:
   subnets: "subnet-0040277cc421e9e2c,subnet-0fa1eda6281d6e7b7"
   # ALB DNS will be populated automatically — leave empty
   host: ""
+
+networkPolicy:
+  enabled: true
