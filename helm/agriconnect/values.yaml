@@ -52,3 +52,6 @@ ingress:
   subnets: "subnet-0040277cc421e9e2c,subnet-0fa1eda6281d6e7b7"
   # ALB DNS will be populated automatically — leave empty
   host: ""
+
+networkPolicy:
+  enabled: true
