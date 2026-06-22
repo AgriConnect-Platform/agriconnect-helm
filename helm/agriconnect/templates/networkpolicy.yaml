@@ -1,4 +1,4 @@
-{{- if .Values.networkPolicy.enabled }}
+{{- if ((.Values.networkPolicy).enabled) }}
 # Deny all ingress by default — explicit allow rules below override this
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
