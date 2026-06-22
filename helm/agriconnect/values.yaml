@@ -1,4 +1,4 @@
-global:
+﻿global:
   namespace: production
   region: ap-south-1
   dbSecretName: "agriconnect/dev/database"
@@ -13,31 +13,31 @@ services:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-auth"
     tag: e4e9407
     port: 3001
-    replicas: 2
+    replicas: 1
 
   marketplace:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-marketplace"
     tag: e4e9407
     port: 3002
-    replicas: 2
+    replicas: 1
 
   order:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-order"
     tag: e4e9407
     port: 3003
-    replicas: 2
+    replicas: 1
 
   media:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-media"
     tag: e4e9407
     port: 3004
-    replicas: 2
+    replicas: 1
 
   notification:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-notification"
     tag: e4e9407
     port: 3005
-    replicas: 2
+    replicas: 1
 
 resources:
   requests:
