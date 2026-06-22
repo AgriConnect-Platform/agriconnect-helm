@@ -1,0 +1,55 @@
+global:
+  namespace: prod
+  region: ap-south-1
+  dbSecretName: "agriconnect/dev/database"
+  eventsTopicArn: "arn:aws:sns:ap-south-1:893431614084:AgriConnect-Events"
+  notificationsQueueUrl: "https://sqs.ap-south-1.amazonaws.com/893431614084/AgriConnect-Notifications-Queue"
+  irsaRoleArn: "arn:aws:iam::893431614084:role/agriconnect-dev-eks-services-role"
+  ecrRegistry: "893431614084.dkr.ecr.ap-south-1.amazonaws.com"
+
+services:
+  auth:
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-auth"
+    tag: latest
+    port: 3001
+    replicas: 2
+
+  marketplace:
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-marketplace"
+    tag: latest
+    port: 3002
+    replicas: 2
+
+  order:
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-order"
+    tag: latest
+    port: 3003
+    replicas: 2
+
+  media:
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-media"
+    tag: latest
+    port: 3004
+    replicas: 2
+
+  notification:
+    image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-notification"
+    tag: latest
+    port: 3005
+    replicas: 2
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+ingress:
+  enabled: true
+  subnets: "subnet-0040277cc421e9e2c,subnet-0fa1eda6281d6e7b7"
+  host: ""
+
+networkPolicy:
+  enabled: true
