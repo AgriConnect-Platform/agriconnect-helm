@@ -11,31 +11,31 @@
 services:
   auth:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-auth"
-    tag: 87626d4
+    tag: 4189bb4
     port: 3001
     replicas: 2
 
   marketplace:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-marketplace"
-    tag: 87626d4
+    tag: 4189bb4
     port: 3002
     replicas: 2
 
   order:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-order"
-    tag: 87626d4
+    tag: 4189bb4
     port: 3003
     replicas: 2
 
   media:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-media"
-    tag: 87626d4
+    tag: 4189bb4
     port: 3004
     replicas: 2
 
   notification:
     image: "893431614084.dkr.ecr.ap-south-1.amazonaws.com/agriconnect-notification"
-    tag: 87626d4
+    tag: 4189bb4
     port: 3005
     replicas: 2
 
